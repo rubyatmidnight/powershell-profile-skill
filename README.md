@@ -15,7 +15,7 @@ My major crpyto wallets are CLI-based and self-written, so I have shortcuts that
 
 2FA apps, portfolio apps, quick launching for applications like ComfyUI, Stable Diffusion, Tavern, or other serve based software that necessarily runs in a terminal instance. 
 
-Automating often-used ssh flows into one easy keyword, and same for grabbing logs from a rmeote server.
+Automating often-used ssh flows into one easy keyword, and same for grabbing logs from a remote server.
 
 Quick-changing safe mode for reboots. 
 
