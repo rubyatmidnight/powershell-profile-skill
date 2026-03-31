@@ -67,29 +67,30 @@ terminal session get from zero to working faster? If yes, the function needs
 work. If no, it is earning its place.
 
 ## ~ ! Important Considerations For Security ! ~
+## Secrets and Sensitive Values
 
-**Never put critical secrets in the Powershell Profile.**
-If you are compromised, this is a simple .ps1 file in your filesystem!
-**When handling IPs and key names, if it's an IP that
-is unsecured/unprotected to the public internet, 
-do not use it within the profile! 
+The config block deliberately centralises values like IPs and key paths so
+they are easy to update -- but that also means they are easy to read. A few
+things worth keeping in mind:
 
+**Tier 1 -- convenience values** (IPs, key filenames, usernames): low-to-medium
+sensitivity. Fine in the profile as long as the machine is not shared and the
+file is not committed to a public repo. If an IP is directly exposed to the
+public internet with no firewall, treat it as higher sensitivity.
 
-**Never commit the profile to a public repo**;
-if you version it at all, keep it private or use a .gitignore 
-+ a separate sanitised "template" version for sharing.
+**Tier 2 -- actual secrets** (passwords, API tokens, private keys): never in
+the profile. These belong in Windows Credential Manager or as user environment
+variables, then referenced in the profile as `$env:MY_SECRET` rather than
+hardcoded values.
 
-**Separate secrets from convenience values**;
-key filenames and IPs are low-to-medium sensitivity;
-**actual passwords or API tokens should never be in the profile at all**,
-those belong in a secrets manager or environment variable set outside the profile!
+**Version control**: if you keep your profile in git, use a private repo or
+maintain a sanitised template version for sharing. A public repo with real IPs
+and key names is a meaningful fingerprint even if nothing is immediately
+exploitable.
 
-**$env: variables as an indirection layer**;
-for anything genuinely secret, set it in Windows Credential Manager or as a user environment variable,
-then reference it in the profile as $env:MY_SECRET rather than hardcoding the value.
-
-**File permissions**; the profile file should be user-readable only, 
-not world-readable, though on a personal Windows machine this is usually fine by default.
+**Shell history**: `Set-ProfileVar` calls are logged to PowerShell's history
+file. If you use it to set a sensitive value, consider clearing the relevant
+entry from `(Get-PSReadlineOption).HistorySavePath` afterward.
 
 
 ---
