@@ -1,6 +1,8 @@
-To download this skill: 
-`git clone https://github.com/rubyatmidnight/powershell-profile-skill`
+# powershell-profile-skill
 
-This skill is intended for improving system mobility for Windows Terminal/Powershell users who may want easy Aliases and other fancy shortcut macros that they may be more comfortable with on Linux. The end result is effectively the same. 
+A Claude skill for creating and improving PowerShell `$PROFILE` files —
+shortcuts, aliases, SSH/SCP helpers, and app launchers for Windows Terminal users.
 
-This original concept and drafts were done by myself, and it was improved and formalized into a generic guide by Sonnet 4.6.
+Install: `git clone https://github.com/rubyatmidnight/powershell-profile-skill`
+
+Original concept and drafts by Ruby. Formalized into a generic guide with Claude Sonnet 4.6.
