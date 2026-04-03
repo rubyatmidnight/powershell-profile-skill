@@ -262,7 +262,7 @@ it was downloaded without saying where it was saved.
 function fetchdb {
     $dest = "$DATA_DIR\backup_$(Get-Date -Format 'MMdd').db"
     Write-Host "Fetching database to $dest ..."
-    _scp -Key $SERVER_KEY -User $SERVER_USER -Host $SERVER_IP `
+    _scp -Key $SERVER_KEY -User $SERVER_USER -RemoteHost $SERVER_IP `
          -Remote "~/app/data/app.db" -Local $dest
     Write-Host "Done."
 }
@@ -305,7 +305,7 @@ function fetchdb {
     $currdate = Get-Date -Format "MMdd"
     $dest = "$DATA_DIR\backup$currdate.db"
     Write-Host "Fetching db to $dest ..."
-    _scp -Key $SERVER_KEY -User $SERVER_USER -Host $SERVER_IP `
+    _scp -Key $SERVER_KEY -User $SERVER_USER -RemoteHost $SERVER_IP `
          -Remote "~/app/data/app.db" -Local $dest
     Write-Host "Done."
 }
@@ -325,7 +325,7 @@ function fetchlogs {
         Write-Warning "Could not create timestamped folder. Using: $targetDir"
     }
     Write-Host "Fetching logs to $targetDir ..."
-    _scp -Key $SERVER_KEY -User $SERVER_USER -Host $SERVER_IP `
+    _scp -Key $SERVER_KEY -User $SERVER_USER -RemoteHost $SERVER_IP `
          -Remote "~/app/logs/*" -Local $targetDir
     Write-Host "Done."
 }
