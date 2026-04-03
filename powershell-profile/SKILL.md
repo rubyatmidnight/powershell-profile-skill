@@ -66,7 +66,6 @@ When reviewing or refactoring a profile, ask of each function: could a new
 terminal session get from zero to working faster? If yes, the function needs
 work. If no, it is earning its place.
 
-## ~ ! Important Considerations For Security ! ~
 ## Secrets and Sensitive Values
 
 The config block deliberately centralises values like IPs and key paths so
@@ -188,15 +187,15 @@ function _scp {
     param(
         [string]$Key,
         [string]$User,
-        [string]$Host,
+        [string]$RemoteHost,
         [string]$Remote,
         [string]$Local,
         [switch]$Upload
     )
     if ($Upload) {
-        scp -r -i $Key "$Local" "${User}@${Host}:${Remote}"
+        scp -r -i $Key "$Local" "${User}@${RemoteHost}:${Remote}"
     } else {
-        scp -r -i $Key "${User}@${Host}:${Remote}" "$Local"
+        scp -r -i $Key "${User}@${RemoteHost}:${Remote}" "$Local"
     }
 }
 ```
@@ -438,6 +437,17 @@ Start-Process "C:\Program Files\My App\app.exe"
 `cd` is an alias for `Set-Location`. Both work, but `Set-Location` is the
 idiomatic form in profile scripts and will not be affected if someone redefines
 the `cd` alias elsewhere.
+
+### 6. Reserved automatic variable names in parameters
+
+PowerShell reserves certain variable names as automatic variables —
+`$Host`, `$Error`, `$Input`, `$Output`, `$Matches`, `$Args`, and others.
+Using any of these as a `param()` name will throw: 
+`Cannot overwrite variable Host because it is read-only or constant.`
+
+If a parameter name feels generic and single-word, check it against
+PowerShell's automatic variables list first. Prefer specific names:
+`$RemoteHost` instead of `$Host`, `$ErrMsg` instead of `$Error`.
 
 ---
 
